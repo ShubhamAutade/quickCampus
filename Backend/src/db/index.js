@@ -9,7 +9,7 @@ dotenv.config()
 const connectDB = async () => {
     try {
 
-        const connection = await mongoose.connect(`${process.env.MONGODB_URL}/quickCampus`)
+        const connection = await mongoose.connect(`mongodb://localhost:27017/quickCampus`)
         console.log(`DB connected successfully`);
         
         
