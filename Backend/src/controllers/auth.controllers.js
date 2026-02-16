@@ -5,6 +5,8 @@ import targetModel from "../utils/modelHelper.js"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 
+import loginHelper from "../utils/loginHelper.js"
+
 
 dotenv.config()
 
@@ -38,7 +40,7 @@ const register = async (req , res) =>{
        if(asStudentExist){
         return res.status(401).json({
             success : false,
-            message : `this user already exist as a student`
+            message : `this user already exist as a student please got to login page `
         })
        }
  
@@ -46,7 +48,7 @@ const register = async (req , res) =>{
           if(asCollegeExist){
         return res.status(401).json({
             success : false,
-            message : `this user already exist as a College`
+            message : `this user already exist as a College please go to login page `
         })
        }
 
@@ -121,4 +123,133 @@ const register = async (req , res) =>{
 }
 
 
-export {register}
+
+
+// for login
+
+const login = async (req, res) =>{
+
+  try {
+
+      // get data
+
+    const {email , password}  = req.body
+
+
+    // validate data
+
+    if(!email || !password) {
+        return res.status(401).json({
+            success : false,
+            message : `please entre password and email`
+        })
+    }
+
+
+    // check user is exist by using loginHelper
+
+     const user = await loginHelper(email)
+
+     if(!user) {
+        return res.status(401).json({
+            success : false,
+            message : `no any type of account`
+        })
+     }
+
+
+
+     // if user is exist then check password is match or not 
+
+
+     const passwordIsTrue = bcrypt.compare(password , user.password)
+
+     if(!passwordIsTrue) {
+
+        return res.status(401).json({
+            success : false ,
+            message : `Wrong password`
+        })
+     }
+
+
+     // password is correct then generating JWT Token 
+
+
+     const payload = {
+        name : user.name,
+        email : user.email,
+        id : user._id,
+        role : user.role
+     }
+
+
+     const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn : "24h"
+     })
+
+
+     // last response with token
+
+     const option = {
+        expiresIn : new Date( Date.now() +  1 * 24 * 60 * 60 * 1000),
+        httpOnly : true
+     }
+
+     return res.status(201).cookie("token", token , option).json({
+        success : true ,
+        message : `login successfully`,
+        payload
+     })
+
+
+
+
+    
+  } catch (error) {
+
+    return res.status(501).json({
+        success : false ,
+        message : `something wrong with sever in auth.controller.js login`
+    })
+    
+  }
+
+}
+
+
+// logOut
+ const logout = async (req , res ) => {
+
+    try {
+
+               
+      res.clearCookie("token",{
+        httpOnly : true,
+        secure : false
+      })
+
+      return res.status(200).json({
+        success: true,
+        message : `logOut Successfully `
+      })
+
+        
+    } catch (error) {
+
+
+        console.log(`error in server in file controllers-auth.js-logout mai ERROR = ${error}`);
+
+        res.status(501).json({
+            success : false,
+            message : `error in server error ${error}`
+        })
+        
+        
+    }
+
+
+}
+
+
+export {register , login , logout}
