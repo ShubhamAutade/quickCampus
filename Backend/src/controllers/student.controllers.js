@@ -162,3 +162,80 @@ export const profile = async (req, res) => {
 }
 
 
+// student profile update 
+// in the app we have some facture when student try to apply college course 
+// then we also check student profile is complete aur not 
+
+export const updateProfile = async (req ,res) => {
+    try {
+
+
+        // get update data from body 
+
+        const updateData = req.body
+
+        // get student id
+
+        const {id} = req.user
+
+        // some facing error 
+        // adding this line 
+       // the error is what haapen when user not object 
+       // mens updateData = null OR Undefine 
+       // then not work Object.key() with null and undefine 
+       // we check 
+
+       if(updateData === undefined) {
+        return res.status(400).json({
+                success : false,
+                message : `body is empty mens undefine `
+            })
+       }
+
+
+        // req.body is empty 
+
+        if(Object.keys(updateData).length === 0) {
+            return res.status(400).json({
+                success : false,
+                message : `no any changes to work`
+            })
+        }
+
+
+        if(!id) {
+             return res.status(400).json({
+                success : false,
+                message : `please provide id`
+            })
+        }
+
+
+        const updateStudent = await Student.findByIdAndUpdate(id ,
+             {$set : updateData },
+            {new : true , runValidators : true}
+            ).select("-password -email -createdAt -updatedAt ")
+
+            if(!updateData) {
+                return res.status(400).json({
+                success : false,
+                message : `no update`
+            })
+            }
+
+            return res.status(201).json({
+                success : true,
+                message : `profile update successfully`,
+                updateStudent
+            })
+        
+    } catch (error) {
+
+        return res.status(500).json({
+                success : false,
+                message : `sever error to updata ${error}`
+            })
+        
+    }
+}
+
