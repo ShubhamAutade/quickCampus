@@ -1,6 +1,7 @@
 
 import {College} from "../models/College.model.js"
 import mongoose from "mongoose"
+import { Student } from "../models/Student.model.js"
 
 
 // student Home page 
@@ -108,5 +109,56 @@ export const oneCollege =  async (req , res) => {
     }
 }
 
+
+// look profile
+// student seen their profile just seen onley on this 
+
+export const profile = async (req, res) => {
+    try {
+
+        // get student email from req.user
+
+        const {email} = req.user
+
+        // check email here
+
+        if(!email) {
+             return res.status(400).json({
+            success : false ,
+            message : `not get email from token please login`
+        })
+        
+        }
+
+        // check account is their 
+
+        const student = await Student.findOne({email}).select("name role profilePhoto contact  castCategory  examCategory marks")
+        .lean()
+
+        // check student found by email 
+
+        if(!student) {
+                 return res.status(400).json({
+            success : false ,
+            message : `not found account by email`
+        })  
+        }
+
+        return res.status(200).json({
+            success : true,
+            message : "your profile details",
+            student 
+          })
+        
+    } catch (error) {
+
+          return res.status(500).json({
+            success : false ,
+            message : `server problem to fetch student profile student ${error} `
+        })
+        
+        
+    }
+}
 
 
