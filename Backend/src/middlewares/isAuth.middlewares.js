@@ -36,9 +36,9 @@ export const isAuth = async (req, res, next) =>  {
         
     } catch (error) {
 
-        return res.status(501).json({
+        return res.status(401).json({
             success : false ,
-            message : `server Error for dev in file auth.middleware.js error = ${error}`
+            message : ` invalid token= ${error}`
         })
         
     }
