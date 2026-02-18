@@ -361,3 +361,57 @@ export const apply =  async (req , res) => {
     }
 }
 
+
+// check application status
+
+export const applicationStatus = async (req, res) => {
+    try {
+
+        // get user id to find applications
+
+        const studentId = req.user.id
+
+         // check studentId is their
+
+         if(!studentId){
+              return res.status(401).json({
+                success : false,
+                message : `student id not gatting from token  data in req.user =  ${JSON.stringify(req.user)}`
+            })
+         }
+
+         // get applicationStatus
+         const applications = await ApplicationStatus.find({studentId})
+         .populate("studentId", "name")
+         .populate("collegeId","name email contact city ")
+         .exec()
+
+         
+         //application is empty 
+
+         if(!applications) {
+            return res.status(500).json({
+                success : false,
+                message : `error to  fetch application stats `
+            })
+        
+         }
+
+
+         return res.status(200).json({
+            success : false , 
+            message : `take look of your all applications status`,
+            applications
+         })
+
+        
+    } catch (error) {
+        
+      return res.status(500).json({
+                success : false,
+                message : ` error to fetch application status${error}`
+            })
+        
+
+    }
+}
