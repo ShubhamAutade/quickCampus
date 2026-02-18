@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors"
 import authRouter from "./routes/auth.routes.js"
 import studentRouter from "./routes/student.routes.js"
+import collegeRouter from "./routes/college.routes.js"
 
 
 
@@ -35,6 +36,8 @@ app.get("/test", (req, res) => {
 app.use("/api/v1/auth", authRouter)
 
 app.use("/api/v1/student" , studentRouter)
+
+app.use("/api/v1/college", collegeRouter)
 
 
 
