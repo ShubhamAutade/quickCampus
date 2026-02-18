@@ -1,5 +1,5 @@
 
- export const isRoleStudent = async (req , res , next) => {
+ export const isRoleCollege = async (req , res , next) => {
 
 
     try {
