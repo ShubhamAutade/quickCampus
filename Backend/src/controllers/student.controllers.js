@@ -2,6 +2,7 @@
 import {College} from "../models/College.model.js"
 import mongoose from "mongoose"
 import { Student } from "../models/Student.model.js"
+import {ApplicationStatus} from "../models/ApplicationStatus.model.js"
 
 
 // student Home page 
@@ -234,6 +235,127 @@ export const updateProfile = async (req ,res) => {
         return res.status(500).json({
                 success : false,
                 message : `sever error to updata ${error}`
+            })
+        
+    }
+}
+
+// student apply to particular college course
+
+
+export const apply =  async (req , res) => {
+
+    try {
+
+
+       // get all information we need 
+
+       // student id  
+       const studentId = req.user.id
+        
+       // course name
+        const {courseName} = req.body
+
+        //college id
+        const collegeId = req.params.id
+
+
+
+        // check body is empty 
+
+         if(req.body === undefined) {
+        return res.status(400).json({
+                success : false,
+                message : `body is empty mens undefine `
+            })
+       }
+
+
+         // check studentId is their
+
+         if(!studentId){
+              return res.status(401).json({
+                success : false,
+                message : `student id not gatting from token  data in req.user =  ${JSON.stringify(req.user)}`
+            })
+         }
+         
+        
+
+
+        //check course present or not 
+
+        if(!courseName) {
+              return res.status(401).json({
+                success : false,
+                message : `please select course`
+            })
+        }
+
+        // check id is present 
+
+        if(!collegeId) {
+            return res.status(401).json({
+                success : false,
+                message : `please  provide  college id`
+            })
+        }
+
+         // check provider id is rely soported to mongoDb
+
+        if(!mongoose.Types.ObjectId.isValid(collegeId)) {
+            return res.status(401).json({
+                success : false,
+                message : `please provide valid id `
+            })
+        }
+
+        // id is valid then find college
+
+        const college = await College.findOne({_id : collegeId})
+
+        // college is present 
+
+        if(!college) {
+            return res.status(400).json({
+                success : false,
+                message : `not found`
+            })
+        }
+
+        
+        // save college in and student info in application schema
+
+        const application = await ApplicationStatus.create({
+            studentId ,
+            collegeId,
+            courseName ,
+            status : "Pending"
+        })
+
+
+
+        if(!application) {
+            return res.status(500).json({
+                success : false,
+                message : `something wrong application not store `
+            })
+        }
+
+        return res.status(201).json({
+            success : true,
+            message : `application sended to college`,
+            application
+        })
+
+
+
+        
+    } catch (error) {
+
+          return res.status(500).json({
+                success : false,
+                message : `sever error to apply college ${error}`
             })
         
     }
