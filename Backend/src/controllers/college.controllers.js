@@ -58,7 +58,49 @@ export const home = async (req ,res) => {
     }
 }
 
+// get college profile 
 
+export const profile = async (req , res ) => {
+    try {
+
+        // get email 
+
+        const {email} = req.user 
+
+        // find the user 
+
+        const user = await College.findOne({email})
+        .select(" -password -createdAt -updatedAt -role ")
+        .lean()
+        .exec()
+
+
+        // check is user exist 
+
+        if(!user) {
+            return res.status(404).json({
+                success : false ,
+                message : `not found user profile`
+            })
+        }
+
+
+        return res.status(200).json({
+            success : true,
+            message : `user profile`,
+            user
+        })
+
+        
+    } catch (error) {
+
+        return res.status(500).json({
+            success : false ,
+            message : `internal server error to load profile`
+        })
+        
+    }
+}
 
 // update profile  
 
