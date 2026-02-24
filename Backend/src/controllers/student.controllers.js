@@ -217,7 +217,7 @@ export const updateProfile = async (req ,res) => {
             {new : true , runValidators : true}
             ).select("-password -email -createdAt -updatedAt ")
 
-            if(!updateData) {
+            if(!updateStudent) {
                 return res.status(400).json({
                 success : false,
                 message : `no update`
