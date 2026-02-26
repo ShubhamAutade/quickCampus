@@ -399,7 +399,7 @@ export const applicationStatus = async (req, res) => {
 
 
          return res.status(200).json({
-            success : false , 
+            success : true , 
             message : `take look of your all applications status`,
             applications
          })
