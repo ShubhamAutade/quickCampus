@@ -114,7 +114,7 @@ export const updateProfile = async (req , res) => {
 
         const updateData = req.body
 
-        // checking body is empty 
+        // checking body here
 
         
        if(updateData === undefined) {
@@ -239,3 +239,99 @@ export const application = async (req , res) => {
     }
 }
 
+
+export const updateStatus = async (req , res ) => {
+    try {
+
+        // get application id 
+        // ye id applicationStatus ki hai ok 
+
+        const {applicationId} = req.params
+
+        // get college id
+
+        const loggedInCollegeId = req.user.id
+
+        // get status to set 
+        const {status} = req.body
+
+
+ // checking status in body is undefine aur not 
+
+        
+       if(status === undefined) {
+        return res.status(400).json({
+                success : false,
+                message : `body is empty mens undefine `
+            })
+       }
+
+
+        // check application id is valid 
+
+        if(!mongoose.Types.ObjectId.isValid(applicationId)) {
+            return res.status(404).json({
+                success : false ,
+                message : `please provide valid id`
+            })
+        }
+
+
+        // get info of application  
+
+        const application = await ApplicationStatus.findById(applicationId )
+        
+
+        // check application is here 
+
+        if(!application) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Application not found"
+             });
+        }
+
+
+
+        // jis college ke uppar application aya hai vahi dekha ra ha hai na 
+
+
+        if(application.collegeId._id.toString() !== loggedInCollegeId) {
+
+            return res.status(403).json({
+                success : false ,
+                message : "Unauthorized: You cannot view applications from other colleges"
+            })
+        }
+
+
+        // update   status 
+
+        const updatedApplication = await ApplicationStatus.findByIdAndUpdate(applicationId, 
+            {$set : {status : status}} ,
+            {new : true , runValidators : true}
+        )
+
+
+        if(!updatedApplication) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Application not updated "
+             });
+        }
+
+
+        return res.status(200).json({
+            success : true , 
+            message : "APPLICATION",
+            updatedApplication
+        })
+        
+    } catch (error) {
+        
+         return res.status(500).json({
+            success : false ,
+            message : `something wrong to update Status ${error}`
+        })
+    }
+}
