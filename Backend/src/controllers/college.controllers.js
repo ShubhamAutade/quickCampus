@@ -239,7 +239,7 @@ export const application = async (req , res) => {
     }
 }
 
-
+// application update status from pending / approve / regent
 export const updateStatus = async (req , res ) => {
     try {
 
@@ -333,5 +333,73 @@ export const updateStatus = async (req , res ) => {
             success : false ,
             message : `something wrong to update Status ${error}`
         })
+    }
+}
+
+
+
+// set filter   
+
+export const setFilter = async (req , res) =>
+{
+    try {
+
+
+        // get6 filter data from body 
+
+        const { requiredExamCategory , requiredExamMarks , requiredStudentCast  } = req.body
+
+
+        
+
+        //  validate body 
+  
+        if(Object.keys(req.body).length  === 0){
+
+            return res.status(200).json({
+                success : false ,
+                message : `no add any filter`
+            })
+
+        }
+
+        // jo jo hoga vahi set karenge 
+
+       const filterPayload = {}
+
+       if(requiredExamCategory) filterPayload.requiredExamCategory = requiredExamCategory
+
+       if(requiredExamMarks) filterPayload.requiredExamMarks = requiredExamMarks
+
+       if(requiredStudentCast) filterPayload.requiredStudentCast = requiredStudentCast
+
+
+
+       // set option
+       const option = {
+        httpOnly : true ,
+        secure : true,
+        sameSite : "None"
+       }
+
+
+
+       // and all set 
+       return res.status(200).cookie("filter", JSON.stringify(filterPayload), option)
+       .json({
+        success : true,
+        message : `filter applied successfully`,
+        filterPayload
+       })
+
+
+        
+    } catch (error) {
+
+          return res.status(500).json({
+            success : false ,
+            message : `something wrong to add filters  ${error}`
+        })
+        
     }
 }
