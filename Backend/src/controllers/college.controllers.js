@@ -3,12 +3,22 @@ import { College } from "../models/College.model.js";
 import { Student } from "../models/Student.model.js";
 import { ApplicationStatus } from "../models/ApplicationStatus.model.js";
 import mongoose from "mongoose";
+import { getFilterData } from "../utils/getFilterData.Helper.js";
 
 
 // college home page 
 
 export const home = async (req ,res) => {
     try {
+
+
+
+         // get filter data 
+
+         const filters = getFilterData(req.filter)
+
+
+
 
         // get college id 
 
@@ -24,25 +34,35 @@ export const home = async (req ,res) => {
         }
 
 
+
+
+        // this query will be merge two object 
+        // this line from future of this time line 
+        let query = {collegeId , ...filters} 
+
+
+
     // get all list fo student tey apply this college 
 
-    const studentsList = await ApplicationStatus.find({collegeId})
+    const studentsList = await ApplicationStatus.find(query)
     .populate("studentId", "name email marks city" )
     .exec()
 
     // check any student apply or note 
 
-    if(Object.keys(studentsList).length === 0) {
+    if(studentsList.length === 0) {
          return res.status(200).json({
             success : true ,
-            message : `no any student apply yet `
+            message : Object.keys(filters).length !== 0 ? ` No students found matching your filters ${ JSON.stringify (filters )}` : `No students have applied to your college yet.`
+        
         })
     }
 
      return res.status(200).json({
             success : true ,
             message : `your students list  `,
-            studentsList
+            studentsList ,
+            filters
         })
 
 

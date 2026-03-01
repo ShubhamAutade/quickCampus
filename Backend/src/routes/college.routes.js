@@ -11,7 +11,7 @@ import { getFilter } from "../middlewares/getFilter.js"
 const router = express.Router()
 
 
-router.get("/home", isAuth, isRoleCollege, collegeProfileCompleted , home)
+router.get("/home", isAuth, isRoleCollege, collegeProfileCompleted ,getFilter, home)
 
 
 router.get("/home/profile" , isAuth , isRoleCollege,  profile)
