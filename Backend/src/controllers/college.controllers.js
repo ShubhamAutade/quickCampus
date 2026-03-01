@@ -337,6 +337,33 @@ export const updateStatus = async (req , res ) => {
 }
 
 
+// filter
+
+export const filter = async ( req , res) => {
+    try {
+
+      
+        const currentFilter = req.filter
+
+
+        return res.status(200).json({
+            success : true,
+            message :  `your filter for now`,
+              currentFilter
+        })
+
+
+        
+    } catch (error) {
+        return res.status(500).json({
+            success : false ,
+            message : `something wrong to filters page  ${error}`,
+          
+        })
+        
+    }
+}
+
 
 // set filter   
 
