@@ -5,12 +5,10 @@ export function getFilterData (filter) {
 
 
   // this helper for college user matalb ki college walo keliye 
-    const {requiredExamCategory , requiredExamMarks, requiredStudentCast} = filter
+    const {requiredExamCategory , requiredExamMarks, requiredStudentCast , requiredCourses , requiredCity} = filter
 
 
-    // this for students 
-
-    const {requiredCourses , requiredCity}  = filter
+    
 
    let filterData = {}
 
@@ -37,13 +35,13 @@ export function getFilterData (filter) {
   // this part for student 
 
   if(requiredCourses) {
-    filter.courses = requiredCourses
+    filterData.courses = requiredCourses
   }
 
   if(requiredCity) {
-    filter.city = requiredCity
+    filterData.city = requiredCity
   }
-  
+
 
     return  filterData
 }

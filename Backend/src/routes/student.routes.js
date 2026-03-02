@@ -6,7 +6,7 @@ import { applicationStatus, apply, filter, home, oneCollege, profile, setFilter,
 import { getStudentFilter } from "../middlewares/getStudentFilter.middlewaress.js"
 const router = express.Router()
 
-router.get("/home", isAuth , isRoleStudent , home)
+router.get("/home", isAuth , isRoleStudent , getStudentFilter,home)
 
 router.get("/home/:id", isAuth , isRoleStudent, oneCollege)
 

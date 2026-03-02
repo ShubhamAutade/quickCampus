@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import { Student } from "../models/Student.model.js"
 import {ApplicationStatus} from "../models/ApplicationStatus.model.js"
 
+import { getFilterData } from "../utils/getFilterData.Helper.js"
 
 // student Home page 
 
@@ -11,8 +12,22 @@ import {ApplicationStatus} from "../models/ApplicationStatus.model.js"
 export const home = async (req , res) => {
     try {
         
+
+
+        // get filter data of student 
+
+        const filters = getFilterData(req.filter)
+
+        const role = "COLLEGE"
+
+
+        // query 
+
+        const query = {role , ...filters}
+
+
         // get all colleges
-        const allCollege =  await College.find({role : "COLLEGE"}).select("name city profilePhoto")
+        const allCollege =  await College.find(query).select("name city profilePhoto")
         .lean()
 
 
@@ -22,15 +37,16 @@ export const home = async (req , res) => {
 
         return res.status(200).json({
             success : true,
-            message : `no any college register yet`
+            message : `no any college register yet , as your filter ${JSON.stringify(filters)}`
         })
        }
 
 
        return res.status(200).json({
         success : true,
-        message : `hay you are`,
-        allCollege
+        message : `hay you are , as your filter ${JSON.stringify(filters)}`,
+        allCollege ,
+        
        })
 
 
@@ -41,7 +57,7 @@ export const home = async (req , res) => {
 
         return res.status(500).json({
             success : false ,
-            message : `server problem to fetch college to student home`
+            message : `server problem to fetch college to student home ${error}`
         })
         
     }
