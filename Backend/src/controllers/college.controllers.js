@@ -403,6 +403,15 @@ export const setFilter = async (req , res) =>
   
         if(Object.keys(req.body).length  === 0){
 
+             // clearing cookie
+            res.clearCookie("collegeFilter" , {
+       
+        httpOnly: true,
+        secure: true,
+        sameSite: "None"
+    })
+
+
             return res.status(200).json({
                 success : true ,
                 message : `no add any filter ,  filter is empty `
