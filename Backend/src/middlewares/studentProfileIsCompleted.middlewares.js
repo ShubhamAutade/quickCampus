@@ -1,10 +1,10 @@
-import {Student} from "../models/College.model.js"
+import {Student} from "../models/Student.model.js"
 
 
 
 //checking student  all profile is completed aur note 
 
-export const collegeProfileCompleted = async (req , res , next) =>  {
+export const studentProfileCompleted = async (req , res , next) =>  {
 
     try {
 
@@ -28,13 +28,14 @@ export const collegeProfileCompleted = async (req , res , next) =>  {
         // check profile is completed OR not 
 
 
-        const {name , email ,  city , contact , castCategory , marks , examCategory} = user
+        const {name , email ,   contact , castCategory , marks , examCategory} = user
 
 
-         if(!name || !email || !city || !contact|| !castCategory || !marks || ! examCategory) {
+         if(!name || !email  || !contact|| !castCategory || !marks || !examCategory) {
             return res.status(400).json({
                 success : false ,
-                message : `please first complete profile`
+                message : `please first complete profile`,
+                name , email ,   contact , castCategory , marks , examCategory
             })
         }
 
