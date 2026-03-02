@@ -4,14 +4,14 @@ import { application, filter, home, profile, setFilter, updateProfile, updateSta
 import { isAuth } from "../middlewares/isAuth.middlewares.js"
 import { isRoleCollege } from "../middlewares/isRoleCollege.middlewares.js"
 import { collegeProfileCompleted } from "../middlewares/collegeProfileIsCompleted.middleware.js"
-import { getFilter } from "../middlewares/getFilter.js"
+import { getCollegeFilter } from "../middlewares/getCollegeFilter.middlwares.js"
 
 
 
 const router = express.Router()
 
 
-router.get("/home", isAuth, isRoleCollege, collegeProfileCompleted ,getFilter, home)
+router.get("/home", isAuth, isRoleCollege, collegeProfileCompleted ,getCollegeFilter, home)
 
 
 router.get("/home/profile" , isAuth , isRoleCollege,  profile)
@@ -23,7 +23,7 @@ router.get("/home/application/:applicationId", isAuth, isRoleCollege ,applicatio
 
 router.post("/home/application/:applicationId/update-status", isAuth , isRoleCollege, updateStatus)
 
-router.get("/home/filter", isAuth , isRoleCollege , getFilter , filter)
+router.get("/home/filter", isAuth , isRoleCollege , getCollegeFilter , filter)
 
 router.post("/home/filter/setfilter", isAuth , isRoleCollege, setFilter)
 

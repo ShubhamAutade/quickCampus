@@ -1,12 +1,12 @@
 
 
-export const getFilter = async (req , res, next )  => {
+export const getCollegeFilter = async (req , res, next )  => {
     try {
 
         // get filter
 
 
-      const rowFilter = req.cookies.filter
+      const rowFilter = req.cookies.collegeFilter
 
        const  filter = rowFilter ? JSON.parse(rowFilter) : {}
 

@@ -385,14 +385,14 @@ export const filter = async ( req , res) => {
 }
 
 
-// set filter   
+// set filter   means whe user set new filter and press uplod or submit button 
 
 export const setFilter = async (req , res) =>
 {
     try {
 
 
-        // get6 filter data from body 
+        // get filter data from body 
 
         const { requiredExamCategory , requiredExamMarks , requiredStudentCast  } = req.body
 
@@ -404,8 +404,8 @@ export const setFilter = async (req , res) =>
         if(Object.keys(req.body).length  === 0){
 
             return res.status(200).json({
-                success : false ,
-                message : `no add any filter`
+                success : true ,
+                message : `no add any filter ,  filter is empty `
             })
 
         }
@@ -432,7 +432,7 @@ export const setFilter = async (req , res) =>
 
 
        // and all set 
-       return res.status(200).cookie("filter", JSON.stringify(filterPayload), option)
+       return res.status(200).cookie("collegeFilter", JSON.stringify(filterPayload), option)
        .json({
         success : true,
         message : `filter applied successfully`,

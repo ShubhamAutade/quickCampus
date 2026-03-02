@@ -415,3 +415,99 @@ export const applicationStatus = async (req, res) => {
 
     }
 }
+
+
+// filter 
+
+export const filter = async ( req , res) => {
+    try {
+
+      
+        const currentFilter = req.filter
+
+
+        return res.status(200).json({
+            success : true,
+            message :  `your filter for now`,
+              currentFilter
+        })
+
+
+        
+    } catch (error) {
+        return res.status(500).json({
+            success : false ,
+            message : `something wrong to filters page  ${error}`,
+          
+        })
+        
+    }
+}
+
+
+
+// setFilter
+
+export const setFilter = async (req , res) =>
+{
+    try {
+
+
+        // get filter data from body 
+
+        const { requiredCity , requiredCourses  } = req.body
+
+
+        
+
+        //  validate body 
+  
+        if(Object.keys(req.body).length  === 0){
+
+            return res.status(200).json({
+                success : true ,
+                message : `no add any filter  , filter is empty `
+            })
+
+        }
+
+        // jo jo hoga vahi set karenge 
+
+       const filterPayload = {}
+
+       if(requiredCity) filterPayload.requiredCity = requiredCity
+
+       if(requiredCourses) filterPayload.requiredCourses = requiredCourses
+
+       
+
+
+
+       // set option
+       const option = {
+        httpOnly : true ,
+        secure : true,
+        sameSite : "None"
+       }
+
+
+
+       // and all set 
+       return res.status(200).cookie("studentFilter", JSON.stringify(filterPayload), option)
+       .json({
+        success : true,
+        message : `filter applied successfully`,
+        filterPayload
+       })
+
+
+        
+    } catch (error) {
+
+          return res.status(500).json({
+            success : false ,
+            message : `something wrong to add filters  ${error}`
+        })
+        
+    }
+}
