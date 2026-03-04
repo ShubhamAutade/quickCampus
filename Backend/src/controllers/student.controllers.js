@@ -5,6 +5,7 @@ import { Student } from "../models/Student.model.js"
 import {ApplicationStatus} from "../models/ApplicationStatus.model.js"
 
 import { getFilterData } from "../utils/getFilterData.Helper.js"
+import { uploadOnCloudinary } from "../utils/cloudinary.js"
 
 // student Home page 
 
@@ -195,6 +196,31 @@ export const updateProfile = async (req ,res) => {
 
         const {id} = req.user
 
+
+        // code for profile photo
+
+
+        let profilePhotoUrl = ""
+
+        if(req.file) {
+            const localPath = req.file.path 
+
+            const cloudinaryResponse  = await uploadOnCloudinary(localPath)
+
+          if(cloudinaryResponse) {
+            profilePhotoUrl = cloudinaryResponse.url
+
+            updateData.profilePhoto = profilePhotoUrl
+          }
+
+        }
+
+       
+
+
+
+
+
         // some facing error 
         // adding this line 
        // the error is what haapen when user not object 
@@ -212,7 +238,7 @@ export const updateProfile = async (req ,res) => {
 
         // req.body is empty 
 
-        if(Object.keys(updateData).length === 0) {
+        if(Object.keys(updateData).length === 0 && !req.file) {
             return res.status(400).json({
                 success : false,
                 message : `no any changes to work`
@@ -230,7 +256,7 @@ export const updateProfile = async (req ,res) => {
 
         const updateStudent = await Student.findByIdAndUpdate(id ,
              {$set : updateData },
-            {new : true , runValidators : true}
+            {returnDocument: 'after', runValidators : true}
             ).select("-password -email -createdAt -updatedAt ")
 
             if(!updateStudent) {
