@@ -4,6 +4,7 @@ import { Student } from "../models/Student.model.js";
 import { ApplicationStatus } from "../models/ApplicationStatus.model.js";
 import mongoose from "mongoose";
 import { getFilterData } from "../utils/getFilterData.Helper.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
 // college home page 
@@ -155,10 +156,33 @@ export const updateProfile = async (req , res) => {
         }
 
 
+
+      // this code for update profilePhoto
+
+        let profilePhotoUrl = ""
+
+        if(req.file) {
+            const localPath = req.file.path 
+
+            const cloudinaryResponse  = await uploadOnCloudinary(localPath)
+
+          if(cloudinaryResponse) {
+            profilePhotoUrl = cloudinaryResponse.url
+
+            updateData.profilePhoto = profilePhotoUrl
+          }
+
+        }
+
+
+
+
+
+
         // updating profile
         const updatedUser = await College.findByIdAndUpdate(id , 
             {$set : updateData},
-            {new : true , runValidators : true}
+            {returnDocument: 'after', runValidators : true}
         ).select("-createdAt -updatedAt -password ")
 
 

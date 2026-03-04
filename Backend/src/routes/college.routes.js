@@ -5,6 +5,8 @@ import { isAuth } from "../middlewares/isAuth.middlewares.js"
 import { isRoleCollege } from "../middlewares/isRoleCollege.middlewares.js"
 import { collegeProfileCompleted } from "../middlewares/collegeProfileIsCompleted.middleware.js"
 import { getCollegeFilter } from "../middlewares/getCollegeFilter.middlwares.js"
+import multer from "multer"
+import { upload } from "../middlewares/multer.middlewares.js"
 
 
 
@@ -17,7 +19,7 @@ router.get("/home", isAuth, isRoleCollege, collegeProfileCompleted ,getCollegeFi
 router.get("/home/profile" , isAuth , isRoleCollege,  profile)
 
 
-router.patch("/home/profile/update", isAuth , isRoleCollege , updateProfile)
+router.patch("/home/profile/update", isAuth , isRoleCollege ,upload.single("profilePhoto") ,  updateProfile)
 
 router.get("/home/application/:applicationId", isAuth, isRoleCollege ,application)
 
