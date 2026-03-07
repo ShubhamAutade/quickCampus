@@ -33,9 +33,9 @@ const register = async (req , res) =>{
 
        // checking user already exist in college And also student 
 
-       const asStudentExist = await College.findOne({email})
+       const asCollegeExist = await College.findOne({email})
 
-       const asCollegeExist = await Student.findOne({email})
+       const asStudentExist = await Student.findOne({email})
 
        if(asStudentExist){
         return res.status(401).json({
