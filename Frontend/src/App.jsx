@@ -1,33 +1,20 @@
-import React from 'react'
-import {Routes , Route , Navigate} from "react-router-dom"
-import HomePage from './page/HomePage'
+// src/App.jsx
+import { Routes, Route } from 'react-router-dom';
+import Signup from './pages/Signup'; // 🚩 Page ko import kiya
 
 
 function App() {
   return (
-
-   <>
-
-    <div
-    className="bg-mauve-900 text-amber-100"
-     
-    >
-
+    <div className="App">
       <Routes>
+       
 
-      <Route 
-      path='/'
-      element = {<HomePage/>}
-
-      />
-
+       
+        <Route path="/signup" element={<Signup />} />
+        
       </Routes>
-
     </div>
-
-
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
