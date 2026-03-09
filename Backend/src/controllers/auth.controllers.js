@@ -99,7 +99,9 @@ const register = async (req , res) =>{
 
        const option = {
         expires :  new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-        httpOnly : true 
+        httpOnly : true ,
+        path: "/",     
+        sameSite: "lax" 
        }
 
        return res.status(201).cookie("token", token , option).json({
@@ -162,7 +164,7 @@ const login = async (req, res) =>{
      // if user is exist then check password is match or not 
 
 
-     const passwordIsTrue = bcrypt.compare(password , user.password)
+     const passwordIsTrue = await bcrypt.compare(password , user.password)
 
      if(!passwordIsTrue) {
 
@@ -192,8 +194,10 @@ const login = async (req, res) =>{
      // last response with token
 
      const option = {
-        expiresIn : new Date( Date.now() +  1 * 24 * 60 * 60 * 1000),
-        httpOnly : true
+        expires : new Date( Date.now() +  1 * 24 * 60 * 60 * 1000),
+        httpOnly : true,
+         path: "/",     
+        sameSite: "lax" 
      }
 
      return res.status(201).cookie("token", token , option).json({
