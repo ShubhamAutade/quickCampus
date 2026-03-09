@@ -135,6 +135,27 @@ export const updateProfile = async (req , res) => {
 
         const updateData = req.body
 
+        let profileUrl = ''
+
+        // code for profilePhot of college
+
+        if(req.file) {
+
+            const localPath = req.file.path 
+
+            const cloudinaryResponse = await uploadOnCloudinary(localPath)
+
+            if(cloudinaryResponse) {
+
+                profileUrl = cloudinaryResponse.url
+               updateData.profilePhoto = profileUrl
+
+            }
+
+        }
+
+
+
         // checking body here
 
         
@@ -148,7 +169,7 @@ export const updateProfile = async (req , res) => {
 
         // req.body is empty 
 
-        if(Object.keys(updateData).length === 0) {
+        if(Object.keys(updateData).length === 0 && !req.file) {
             return res.status(400).json({
                 success : false,
                 message : `no any changes to work`
