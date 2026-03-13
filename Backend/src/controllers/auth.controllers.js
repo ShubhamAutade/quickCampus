@@ -8,6 +8,7 @@ import dotenv from "dotenv"
 import loginHelper from "../utils/loginHelper.js"
 
 
+
 dotenv.config()
 
 // for registration 
@@ -88,6 +89,7 @@ const register = async (req , res) =>{
              email : newUser.email,
              name : newUser.name,
              role : newUser.role,
+            profilePhoto : user.profilePhoto,
        }
 
        const token = jwt.sign(payload,process.env.JWT_SECRET, {
@@ -182,7 +184,9 @@ const login = async (req, res) =>{
         name : user.name,
         email : user.email,
         id : user._id,
-        role : user.role
+        role : user.role,
+        profilePhoto : user.profilePhoto,
+        
      }
 
 
