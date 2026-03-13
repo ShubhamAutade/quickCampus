@@ -39,7 +39,7 @@ const register = async (req , res) =>{
        const asStudentExist = await Student.findOne({email})
 
        if(asStudentExist){
-        return res.status(401).json({
+        return res.status(409).json({
             success : false,
             message : `this user already exist as a student please got to login page `
         })
@@ -47,7 +47,7 @@ const register = async (req , res) =>{
  
 
           if(asCollegeExist){
-        return res.status(401).json({
+        return res.status(409).json({
             success : false,
             message : `this user already exist as a College please go to login page `
         })
@@ -89,7 +89,7 @@ const register = async (req , res) =>{
              email : newUser.email,
              name : newUser.name,
              role : newUser.role,
-            profilePhoto : user.profilePhoto,
+            profilePhoto : newUser.profilePhoto,
        }
 
        const token = jwt.sign(payload,process.env.JWT_SECRET, {
@@ -109,7 +109,7 @@ const register = async (req , res) =>{
        return res.status(201).cookie("token", token , option).json({
         success : true,
         message : `user creates successfully `,
-        newUser
+        payload
        })
 
 
