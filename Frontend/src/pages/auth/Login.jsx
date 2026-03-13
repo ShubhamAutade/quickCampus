@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import toast from "react-hot-toast"
-import { useLoginUserStore } from '../../storage/loginUserStore'
+import { useLoginUserStore } from '../../storage/loginUserStore.js'
 import { useForm } from 'react-hook-form'
 import { useNavigate , Link} from 'react-router-dom'
 
@@ -43,7 +43,7 @@ function Login() {
           
           <form className="card-body " onSubmit={handleSubmit(onSubmit)}>
 
-            {/* kar ke uppare wala messahe  */}
+          
 
             <div className='flex items-center justify-center'>
     
@@ -52,6 +52,7 @@ function Login() {
             </div>
            <div className="divider"></div>
             
+            {/* email */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-bold">Email Address</span>
@@ -70,6 +71,7 @@ function Login() {
                   {errors.email && <p className='text-[#d30000] italic font-bold '>{errors.email.message}</p>}
             </div>
 
+            {/* password */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-bold">Password</span>
