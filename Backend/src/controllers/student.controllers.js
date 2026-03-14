@@ -28,7 +28,7 @@ export const home = async (req , res) => {
 
 
         // get all colleges
-        const allCollege =  await College.find(query).select("name city profilePhoto")
+        const allCollege =  await College.find(query).select("name city profilePhoto _id")
         .lean()
 
 
