@@ -1,5 +1,7 @@
 import React from 'react'
 import { useLoginUserStore } from '../storage/loginUserStore'
+import Navbar from '../components/Navbar'
+import Hero from '../components/Hero'
 
 function Home() {
 
@@ -7,14 +9,15 @@ function Home() {
 
   return (
 
-    <div className='flex items-center justify-center min-h-screen'>
+   <div className='min-h-screen bg-base-300'>
 
-        {user? (<img className='w-60 h-60 rounded-full object-cover border-4 border-primary' 
-        alt='image'
-        src = {user.profilePhoto}
-        />) : (<p>No user Login</p>)}
-  
-    </div>
+{/* nave bar */}
+ <Navbar />
+
+
+
+   </div>
+
   )
 }
 
