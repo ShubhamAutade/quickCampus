@@ -10,11 +10,12 @@ function Home() {
   return (
 
    <div className='min-h-screen bg-base-300'>
-
+    
 {/* nave bar */}
  <Navbar />
 
-
+{/* hero section  */}
+<Hero />
 
    </div>
 
