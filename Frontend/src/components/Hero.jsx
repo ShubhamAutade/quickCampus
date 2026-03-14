@@ -114,10 +114,10 @@ if(error) {
      (
       <div className='flex flex-col  justify-center items-center text-center w-full min-h-screen col-span-full'>
         
-        {/* Ek mast icon dikhao */}
+        {/* icon*/}
         <div className="text-6xl mb-4">🔍</div>
         
-        {/* Backend se aaya hua message dikhao */}
+        {/* Backend message */}
         <h2 className="text-2xl font-bold text-gray-500 text-center px-4">
           {  "No any college Found!"}
         </h2>
