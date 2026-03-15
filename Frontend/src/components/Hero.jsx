@@ -96,7 +96,7 @@ if(error) {
       colleges.map((item) => (
       <div key={item._id} className="card bg-base-100 shadow-xl border border-base-300 hover:scale-105 transition-transform cursor-pointer">
         <figure className="px-4 pt-4">
-          <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=500" alt="College" className="rounded-xl h-40 w-full object-cover" />
+          <img src= {item.profilePhoto} alt="College" className="rounded-xl h-40 w-full object-cover" />
         </figure>
         <div className="card-body items-center text-center p-4">
           <h2 className="card-title  text-xl font-extrabold">{item.name || "N/A"}</h2>
