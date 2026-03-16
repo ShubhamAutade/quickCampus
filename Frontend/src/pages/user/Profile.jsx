@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useLoginUserStore } from '../../storage/loginUserStore.js'
 import axios from "axios"
 import toast from "react-hot-toast"
+import Navbar from "../../components/Navbar.jsx"
 
 function Profile() {
 
@@ -82,9 +83,16 @@ const handleSave = async () => {
 
 
   return (
+<>
+  {/* display nav bar  */}
 
-    // bg dive 
-    <div className='bg-base-100 min-h-screen flex items-center justify-center'>
+  <Navbar />
+  
+  
+
+
+    {/* // bg dive  */}
+    <div className='bg-base-100 min-h-screen flex items-center justify-center pt-11'>
  
       {/* this is dive that show content */}
      <div className='bg-base-300 min-h-[80vh] w-full max-w-md flex flex-col justify-center items-center  rounded-2xl'>
@@ -226,7 +234,9 @@ const handleSave = async () => {
 
      </div>  {/*end of content the from like skelton */}
 
-    </div>  // end od bg 
+    </div> 
+    
+    </>
   )
 
 

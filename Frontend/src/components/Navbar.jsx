@@ -2,6 +2,8 @@ import React from 'react'
 import {useLoginUserStore} from "../storage/loginUserStore.js"
 import { Link } from 'react-router-dom'
 
+import ThemeToggle from "./ThemeToggle.jsx"
+
 
 function Navbar() {
 
@@ -40,8 +42,10 @@ function Navbar() {
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         
+        <li> <Link to='/' > Home</Link> </li>
         <li> <Link to='/profile' > profile</Link> </li>
-        <li><a>Logout</a></li>
+        <hr></hr>
+        <li className='pt-1'><a className='bg-red-700'>Logout</a></li>
 
       </ul>
     </div>
@@ -53,6 +57,7 @@ function Navbar() {
       </div>
     </button>
 
+    <ThemeToggle />
 
 
     </div>

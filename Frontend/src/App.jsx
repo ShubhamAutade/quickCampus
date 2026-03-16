@@ -1,4 +1,4 @@
-
+import { useEffect } from "react"
 import {Routes, Route , Navigate } from "react-router-dom"
 import Login from "./pages/auth/Login"
 import Home from "./pages/Home"
@@ -6,11 +6,20 @@ import {Toaster} from "react-hot-toast"
 import Signup from "./pages/auth/Signup"
 import Profile from "./pages/user/Profile"
 import { useLoginUserStore } from "./storage/loginUserStore"
+import { useThemeStore } from "./storage/themeStore"
 
 
 function App() {
 
   const user = useLoginUserStore((state) => state.user)
+
+  const theme = useThemeStore((state) => state.theme)
+
+  // handale theme
+  useEffect(() => {
+   
+    document.querySelector('html').setAttribute('data-theme', theme)
+  }, [theme])
  
 
   return (
