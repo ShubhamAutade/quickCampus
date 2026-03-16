@@ -90,6 +90,13 @@ const register = async (req , res) =>{
              name : newUser.name,
              role : newUser.role,
             profilePhoto : newUser.profilePhoto,
+
+            ...(newUser.castCategory && { castCategory: newUser.castCategory }),
+            ...(newUser.marks && { marks: newUser.marks }),
+            ...(newUser. examCategory && {  examCategory: newUser. examCategory }),
+            ...(newUser.courses && { courses: newUser.courses }),
+            ...(newUser. city  && {  city : newUser. city  }),
+            ...(newUser.Staff && { Staff: newUser.Staff }),
        }
 
        const token = jwt.sign(payload,process.env.JWT_SECRET, {
@@ -180,15 +187,20 @@ const login = async (req, res) =>{
      // password is correct then generating JWT Token 
 
 
-     const payload = {
-        name : user.name,
-        email : user.email,
-        id : user._id,
-        role : user.role,
-        profilePhoto : user.profilePhoto,
-        
-     }
+     const  payload = {
+            id : user._id,
+             email : user.email,
+             name : user.name,
+             role : user.role,
+            profilePhoto : user.profilePhoto,
 
+            ...(user.castCategory && { castCategory: user.castCategory }),
+            ...(user.marks && { marks: user.marks }),
+            ...(user. examCategory && {  examCategory: user. examCategory }),
+            ...(user.courses && { courses: user.courses }),
+            ...(user. city  && {  city : user. city  }),
+            ...(user.Staff && { Staff: user.Staff }),
+       }
 
      const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn : "24h"
