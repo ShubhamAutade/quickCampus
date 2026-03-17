@@ -7,6 +7,7 @@ import Signup from "./pages/auth/Signup"
 import Profile from "./pages/user/Profile"
 import { useLoginUserStore } from "./storage/loginUserStore"
 import { useThemeStore } from "./storage/themeStore"
+import MyApplicationsStatus from "./pages/user/MyApplicationsStatus"
 
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
       <Route path="/signup" element = {<Signup />} />
 
       <Route path="/profile" element = {user? <Profile /> : <Navigate to = '/login' />} />
+
+      <Route path="/applications" element = {user? <MyApplicationsStatus  /> : <Navigate to = '/login' />} />
 
 
       </Routes>
