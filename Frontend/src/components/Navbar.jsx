@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom'
 
 import ThemeToggle from "./ThemeToggle.jsx"
 
+import {useLogout} from "../hooks/useLogout.js"
+
 
 function Navbar() {
 
   const user = useLoginUserStore((state) => state.user)
+
+  const {logout} = useLogout()
 
   return ( 
     
@@ -45,7 +49,7 @@ function Navbar() {
         <li> <Link to='/' > Home</Link> </li>
         <li> <Link to='/profile' > profile</Link> </li>
         <hr></hr>
-        <li className='pt-1'><a className='bg-red-700'>Logout</a></li>
+        <li className='pt-1'><button className='bg-red-700' onClick={logout}>Logout</button></li>
 
       </ul>
     </div>
