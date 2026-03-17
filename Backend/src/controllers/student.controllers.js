@@ -425,7 +425,7 @@ export const applicationStatus = async (req, res) => {
          // get applicationStatus
          const applications = await ApplicationStatus.find({studentId})
          .populate("studentId", "name")
-         .populate("collegeId","name email contact city ")
+         .populate("collegeId","profilePhoto name email contact city")
          .exec()
 
          
