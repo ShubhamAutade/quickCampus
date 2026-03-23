@@ -100,7 +100,7 @@ if(error) {
         </figure>
         <div className="card-body items-center text-center p-4">
           <h2 className="card-title  text-xl font-extrabold">{item.name || "N/A"}</h2>
-          <p className='text-xs opacity-70'> City : {item.city ||  "N/A"}</p>
+          <p className='text-large opacity-70'> City : {item.city ||  "N/A"}</p>
           <div className="card-actions">
             <button className="btn btn-primary btn-sm">View Details</button>
           </div>
