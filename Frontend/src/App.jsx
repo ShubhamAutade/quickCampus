@@ -8,6 +8,7 @@ import Profile from "./pages/user/Profile"
 import { useLoginUserStore } from "./storage/loginUserStore"
 import { useThemeStore } from "./storage/themeStore"
 import MyApplicationsStatus from "./pages/user/MyApplicationsStatus"
+import FilterDrawer from "./components/FilterDrawer"
 
 
 function App() {
@@ -41,6 +42,8 @@ function App() {
 
 
       </Routes>
+
+      {user && <FilterDrawer />}
     </div>
   )
 }
