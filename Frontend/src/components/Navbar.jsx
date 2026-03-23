@@ -6,6 +6,8 @@ import ThemeToggle from "./ThemeToggle.jsx"
 
 import {useLogout} from "../hooks/useLogout.js"
 
+import { useFilterStore } from '../storage/useFilterStore.js'
+
 
 
 
@@ -14,6 +16,8 @@ function Navbar() {
   const user = useLoginUserStore((state) => state.user)
 
   const {logout} = useLogout()
+
+  const   toggleFilter = useFilterStore((state) => state.toggleFilter)
 
   return ( 
     
@@ -24,7 +28,7 @@ function Navbar() {
 
     {/* filter Button */}
   <div className="flex-none">
-    <button className="btn ">
+    <button className="btn " onClick={toggleFilter}>
       Filter
     </button>
   </div>
