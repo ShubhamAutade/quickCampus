@@ -101,7 +101,7 @@ export const oneCollege =  async (req , res) => {
 
         // id is valid then find college
 
-        const college = await College.findOne({_id : id}).select("name email contact profileImage city courses staff")
+        const college = await College.findOne({_id : id}).select("name email contact profilePhoto city courses Staff updatedAt")
         .lean()
 
         // college is present 

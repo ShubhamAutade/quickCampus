@@ -9,6 +9,7 @@ import { useLoginUserStore } from "./storage/loginUserStore"
 import { useThemeStore } from "./storage/themeStore"
 import MyApplicationsStatus from "./pages/user/MyApplicationsStatus"
 import FilterDrawer from "./components/FilterDrawer"
+import CollegeDetails from "./pages/user/CollegeDetails"
 
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
       <Route path="/profile" element = {user? <Profile /> : <Navigate to = '/login' />} />
 
       <Route path="/applications" element = {user? <MyApplicationsStatus  /> : <Navigate to = '/login' />} />
+
+      <Route path="/college/:id" element = {user? <CollegeDetails /> : <Navigate to = '/' />} />
 
 
       </Routes>

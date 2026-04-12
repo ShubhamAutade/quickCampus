@@ -76,7 +76,7 @@ const FilterDrawer = () => {
            placeholder="e.g. Pune, Mumbai" 
            className="input input-bordered w-full focus:input-primary transition-all" 
            value={filters.requiredCity}
-           onChange={(e) => setFilters({requiredCity : e.target.value.trim()})}
+           onChange={(e) => setFilters({requiredCity : e.target.value.trimStart()})}
            
           
           />

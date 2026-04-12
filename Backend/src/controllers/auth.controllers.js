@@ -193,6 +193,7 @@ const login = async (req, res) =>{
              name : user.name,
              role : user.role,
             profilePhoto : user.profilePhoto,
+            contact : user.contact,
 
             ...(user.castCategory && { castCategory: user.castCategory }),
             ...(user.marks && { marks: user.marks }),

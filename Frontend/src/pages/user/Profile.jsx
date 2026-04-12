@@ -66,7 +66,7 @@ const handleSave = async () => {
       withCredentials : true
     })
 
-    console.log(response);
+    console.log(response); 
     
     setUser(response?.data?.updateStudent)
 
