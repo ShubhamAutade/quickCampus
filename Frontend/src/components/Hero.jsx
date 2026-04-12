@@ -2,12 +2,19 @@ import React, { useEffect, useState } from 'react'
 
 import axios from "axios"
 
+
+import { useFilterStore } from '../storage/useFilterStore.js'; 
+
 function Hero() {
 
 //colleges
 const [colleges , setColleges] = useState([])
 const [loading ,setLoading] = useState(true)
 const [error , setError] = useState(false)
+
+const triggerRefresh = useFilterStore((state) => state.triggerRefresh)
+
+const  refreshKey = useFilterStore ((state) => state.refreshKey)
 
 
 // calling api 
@@ -41,7 +48,7 @@ useEffect( () => {
 
   fetchColleges()
 
-} , [] )
+} , [refreshKey] )
 
 
 
@@ -123,7 +130,8 @@ if(error) {
         </h2>
         
         <button 
-          onClick={() => window.location.reload()} 
+      
+          onClick = { triggerRefresh}
           className="btn btn-primary mt-6 btn-outline"
         >
           Try Again

@@ -38,7 +38,10 @@ export const home = async (req , res) => {
 
         return res.status(200).json({
             success : true,
-            message : `no any college register yet , as your filter ${JSON.stringify(filters)}`
+            message : `no any college register yet , as your filter ${JSON.stringify(filters)}`,
+              // query sendin only this time to debug 
+        query
+        
         })
        }
 
@@ -47,6 +50,9 @@ export const home = async (req , res) => {
         success : true,
         message : `hay you are , as your filter ${JSON.stringify(filters)}`,
         allCollege ,
+
+        // query sendin only this time to debug 
+        query
         
        })
 

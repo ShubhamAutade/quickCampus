@@ -6,7 +6,7 @@ import { useFilterStore } from '../storage/useFilterStore';
 const FilterDrawer = () => {
 
   // get isOpen And closeFilter 
-  const { isOpen, closeFilter , filters , setFilters , resetFilter } = useFilterStore();
+  const { isOpen, closeFilter , filters , setFilters , resetFilter  ,  triggerRefresh } = useFilterStore();
 
 
   // setting filter data in to cooke according to backend logic
@@ -18,7 +18,11 @@ const FilterDrawer = () => {
 
     closeFilter()
 
-    window.location.reload()
+    //window.location.reload()  // bad approach
+
+   // new approach
+
+   triggerRefresh ()
   }
 
 
@@ -32,7 +36,10 @@ const FilterDrawer = () => {
     
     closeFilter(); 
 
-    window.location.reload()
+    //window.location.reload()  // bad approach
+
+   // new approach 
+     triggerRefresh()
   
   }
 

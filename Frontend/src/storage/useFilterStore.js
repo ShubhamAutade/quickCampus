@@ -33,5 +33,11 @@ export const useFilterStore = create((set) => ({
             requiredCourse: ""
             
         }
-    })
+    }),
+
+    refreshKey : 0,  
+
+  triggerRefresh : () => set ((state) => ({refreshKey : state.refreshKey + 1 }))
+
+
 }));
