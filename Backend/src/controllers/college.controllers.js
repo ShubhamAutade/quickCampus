@@ -5,7 +5,7 @@ import { ApplicationStatus } from "../models/ApplicationStatus.model.js";
 import mongoose from "mongoose";
 import { getFilterData } from "../utils/getFilterData.Helper.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-
+ 
 
 // college home page 
 
@@ -46,7 +46,7 @@ export const home = async (req ,res) => {
     // get all list fo student tey apply this college 
 
     const studentsList = await ApplicationStatus.find(query)
-    .populate("studentId", "name email marks city" )
+    .populate("studentId", "name email marks profilePhoto" )
     .exec()
 
     // check any student apply or note 
@@ -261,7 +261,7 @@ export const application = async (req , res) => {
         // get info of application 
 
         const application = await ApplicationStatus.findById(applicationId )
-        .populate("studentId" , "name email marks city contact profilePhoto castCategory examCategory")
+        .populate("studentId" , "name email marks contact profilePhoto castCategory examCategory")
         .populate("collegeId", "name _id ")
         .exec()
 

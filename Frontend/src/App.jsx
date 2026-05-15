@@ -10,6 +10,8 @@ import { useThemeStore } from "./storage/themeStore"
 import MyApplicationsStatus from "./pages/user/MyApplicationsStatus"
 import FilterDrawer from "./components/FilterDrawer"
 import CollegeDetails from "./pages/user/CollegeDetails"
+import SingleStudentDetails from "./pages/user/college/singleStudentDetails"
+import CollegeProfile from "./pages/user/college/CollegeProfile"
 
 
 function App() {
@@ -37,11 +39,15 @@ function App() {
        
       <Route path="/signup" element = {<Signup />} />
 
-      <Route path="/profile" element = {user? <Profile /> : <Navigate to = '/login' />} />
+      <Route path="/profile" element = {user?.role === "STUDENT" ? <Profile /> : <Navigate to = '/' />} />
 
       <Route path="/applications" element = {user? <MyApplicationsStatus  /> : <Navigate to = '/login' />} />
 
       <Route path="/college/:id" element = {user? <CollegeDetails /> : <Navigate to = '/' />} />
+
+      <Route path="/application/:applicationId" element = {user? <SingleStudentDetails /> : <Navigate to = '/' />} />
+
+      <Route path="/college/profile" element = {user?.role === "COLLEGE" ? <CollegeProfile /> : <Navigate to = '/'/>} />
 
 
       </Routes>

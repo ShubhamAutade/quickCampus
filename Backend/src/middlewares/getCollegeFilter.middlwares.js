@@ -21,4 +21,4 @@ export const getCollegeFilter = async (req , res, next )  => {
             message : `something wrong to getFilter`
         })
     }
-}
+}  

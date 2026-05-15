@@ -2,18 +2,25 @@ import React from 'react';
 import Cookies from "js-cookie"
 
 import { useFilterStore } from '../storage/useFilterStore'; 
+import { useLoginUserStore } from '../storage/loginUserStore.js';
 
 const FilterDrawer = () => {
 
+
+ const role = useLoginUserStore((state) => (state.user?.role))
+
   // get isOpen And closeFilter 
-  const { isOpen, closeFilter , filters , setFilters , resetFilter  ,  triggerRefresh } = useFilterStore();
+  const { isOpen, closeFilter , filters , setFilters , resetFilter  ,  triggerRefresh   } = useFilterStore();
 
 
   // setting filter data in to cooke according to backend logic
 
   const handleApply = () => {
 
-    Cookies.set('studentFilter' , JSON.stringify(filters))
+
+   if (role === "STUDENT") Cookies.set('studentFilter' , JSON.stringify(filters))
+
+   if (role === "COLLEGE") Cookies.set('collegeFilter' , JSON.stringify(filters))
 
 
     closeFilter()
@@ -32,7 +39,9 @@ const FilterDrawer = () => {
     resetFilter();
 
     // remove cookies for backend will not get any type of cookies from frontend 
-    Cookies.remove('studentFilter')
+    if  (role === "STUDENT") Cookies.remove('studentFilter')
+
+      if(role === "COLLEGE") Cookies.remove('collegeFilter')
     
     closeFilter(); 
 
@@ -64,7 +73,11 @@ const FilterDrawer = () => {
         <div className="p-6 flex flex-col h-full">
 
 
-         {/* div for set city */}
+
+       {/* for role student  */}
+        { role === "STUDENT" && <>
+
+          {/* div for set city */}
          <div className='form-control w-full mb-4'>
 
             <label className="label pr-3">
@@ -99,7 +112,86 @@ const FilterDrawer = () => {
           
           />
          </div>
+         </>
+         }     
 
+       {/* for COLLEGE */}
+
+         {role === "COLLEGE" && <>
+         
+       {/* fore marks
+         <div className='form-control w-full mb-4'>
+
+            <label className="label pr-3">
+                 <span className="label-text font-bold text-base-content/70 uppercase text-xs">Required Exam Marks</span>
+            </label>
+
+          <input 
+           type="number" 
+           placeholder="90" 
+           className="input input-bordered w-full focus:input-primary transition-all" 
+           value={filters.requiredExamMarks}
+           onChange={(e) => setFilters({requiredExamMarks : e.target.value.trim()})}
+          
+          />
+         </div> */}
+
+
+       {/* required Exam Category
+         <div className='form-control w-full mb-4'>
+
+            <label className="label pr-3">
+                 <span className="label-text font-bold text-base-content/70 uppercase text-xs">Exam Category</span>
+            </label>
+
+          <input 
+           type="text" 
+           placeholder="MHT-CET HHC SSC" 
+           className="input input-bordered w-full focus:input-primary transition-all" 
+           value={filters.requiredExamCategory}
+           onChange={(e) => setFilters({ requiredExamCategory : e.target.value.trim()})}
+          
+          />
+         </div> */}
+
+       {/* Student Cast
+         <div className='form-control w-full mb-4'>
+
+            <label className="label pr-3">
+                 <span className="label-text font-bold text-base-content/70 uppercase text-xs"> Student Cast</span>
+            </label>
+
+          <input 
+           type="text" 
+           placeholder="OBC SC NT" 
+           className="input input-bordered w-full focus:input-primary transition-all" 
+           value={filters.requiredStudentCast}
+           onChange={(e) => setFilters({requiredStudentCast : e.target.value.trim()})}
+          
+          />
+         </div> */}
+
+
+
+       {/* Status */}
+         <div className='form-control w-full mb-4'>
+
+            <label className="label pr-3">
+                 <span className="label-text font-bold text-base-content/70 uppercase text-xs"> Status</span>
+            </label>
+
+          <input 
+           type="text" 
+           placeholder="Pending / Rejected / Approved" 
+           className="input input-bordered w-full focus:input-primary transition-all" 
+           value={filters.status}
+           onChange={(e) => setFilters({status : e.target.value.trim()})}
+          
+          />
+         </div>
+
+         
+         </>}    
 
 
           {/* dive for two buttons clear and apply */}

@@ -34,7 +34,7 @@ export const studentProfileCompleted = async (req , res , next) =>  {
          if(!name || !email  || !contact|| !castCategory || !marks || !examCategory) {
             return res.status(400).json({
                 success : false ,
-                message : `please first complete profile`,
+                message : `please first complete profile `,
                 name , email ,   contact , castCategory , marks , examCategory
             })
         }

@@ -25,6 +25,7 @@ router.get("/home/application/:applicationId", isAuth, isRoleCollege ,applicatio
 
 router.post("/home/application/:applicationId/update-status", isAuth , isRoleCollege, updateStatus)
 
+// no use
 router.get("/home/filter", isAuth , isRoleCollege , getCollegeFilter , filter)
 
 router.post("/home/filter/setfilter", isAuth , isRoleCollege, setFilter)
@@ -33,3 +34,4 @@ router.post("/home/filter/setfilter", isAuth , isRoleCollege, setFilter)
 export default router
 
 
+  

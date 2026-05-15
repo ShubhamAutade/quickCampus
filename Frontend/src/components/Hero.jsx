@@ -7,18 +7,27 @@ import axios from "axios"
 
 import { useFilterStore } from '../storage/useFilterStore.js'; 
 
+import {useLoginUserStore} from  '../storage/loginUserStore.js'
+import HeroCollege from '../pages/user/college/HeroCollege.jsx';
+
 function Hero() {
 
   const navigate = useNavigate()
 
+  const user = useLoginUserStore((state) => state.user);
+  const role = user?.role
+
 //colleges
 const [colleges , setColleges] = useState([])
+const [studentApplications , setStudentApplications] =  useState([])
 const [loading ,setLoading] = useState(true)
 const [error , setError] = useState(false)
 
 const triggerRefresh = useFilterStore((state) => state.triggerRefresh)
 
 const  refreshKey = useFilterStore ((state) => state.refreshKey)
+
+
 
 
 // calling api 
@@ -31,11 +40,18 @@ useEffect( () => {
 
       setError(null)
 
-      const response = await axios.get("http://localhost:8090/api/v1/student/home" ,{
+      const apiUrl = role === "COLLEGE"? "http://localhost:8090/api/v1/college/home": "http://localhost:8090/api/v1/student/home"
+
+      const response = await axios.get(apiUrl ,{
         withCredentials : true
       })
 
+      console.log(response.data);
+      
+
       setColleges(response.data.allCollege || [])
+
+      setStudentApplications(response.data.studentsList)
 
       console.log(response);
       
@@ -43,6 +59,8 @@ useEffect( () => {
     } catch (err) {
 
       setError(err)
+      console.log(err.response);
+      
       
     }finally {
       setLoading(false)
@@ -73,24 +91,64 @@ if(loading) {
 
 
 // if error
-if(error) {
+// if(error) {
+//   return (
+//      <div className='min-h-screen'>
+
+//       {/* spinner */}
+//     <div className='flex items-center justify-center min-h-screen'>
+//     {error.response?.data?.message? ( <p className='font-bold text-2xl  text-red-700'> {error.response.data.message} </p> ) : ( <p className='font-bold text-2xl text-red-700'>Failed to Fetch Colleges</p> ) }
+//     </div>
+
+//     </div>
+
+//   )
+// }
+
+// if error
+if (error) {
+  // Check karo kya ye "Incomplete Profile" wala error hai?
+  const isProfileIncomplete = error.response?.status === 301 || error.response?.data?.message?.includes("profile");
+
   return (
-     <div className='min-h-screen'>
+    <div className='min-h-screen flex flex-col items-center justify-center p-6 text-center'>
+      
+      {isProfileIncomplete ? (
+        // 🚩 Case 1: Agar sirf profile complete nahi hai toh ye dikhao
+        <div className="card bg-warning text-warning-content p-8 shadow-xl max-w-md">
+          <h2 className="text-3xl mb-2">📋</h2>
+          <h2 className="font-bold text-xl uppercase">Profile Incomplete</h2>
+          <p className="mt-2 opacity-90">{error.response.data.message}</p>
+          <button 
+            onClick={() => navigate("/college/profile")} 
+            className="btn btn-sm mt-6 btn-neutral"
+          >
+            Complete Profile Now
+          </button>
+        </div>
+      ) : (
+        // 🚩 Case 2: Agar koi aur error hai (Server down, etc.)
+        <>
+          <p className='font-bold text-2xl text-red-700'>
+            {error.response?.data?.message || "Something went wrong"}
+          </p>
+          <button onClick={() => triggerRefresh()} className="btn btn-outline btn-error mt-4">
+            Try Again
+          </button>
+        </>
+      )}
 
-      {/* spinner */}
-    <div className='flex items-center justify-center min-h-screen'>
-    {error.response?.data?.message? ( <p className='font-bold text-2xl  text-red-700'> {error.response.data.message} </p> ) : ( <p className='font-bold text-2xl text-red-700'>Failed to Fetch Colleges</p> ) }
     </div>
-
-    </div>
-
-  )
+  );
 }
 
 
 
 // all good 
-  return (
+
+   
+
+  return role === "STUDENT" ? (
    <div className='min-h-screen'>
 
   {/* Home Page Hading */}
@@ -151,7 +209,7 @@ if(error) {
 
 
 </div>
-  )
+  ) : <HeroCollege studentsList = {studentApplications} />
 }
 
 export default Hero
